@@ -1,0 +1,16 @@
+# сборка
+android/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+*.apk
+*.aab
+
+# ключ подписи — в репозиторий не кладём никогда
+keystore/
+*.keystore
+*.jks
+
+# служебное
+__pycache__/
+.DS_Store

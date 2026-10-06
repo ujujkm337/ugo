@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#14171c">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Тренажёр УГО по ГОСТ, сборка электрических схем с расчётом токов и оригинал ГОСТ 21.210-2014.">
+<title>УГО — тренажёр и сборка схем</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+
+<!-- ══════════════ ШАПКА ══════════════ -->
+<header id="hdr">
+  <div class="brand">УГО<i id="std-badge">ЕСКД 2.7xx</i></div>
+  <div class="stats">
+    <span class="stat xp"  title="Опыт">◆&nbsp;<b id="s-xp">0</b></span>
+    <span class="stat"     title="Серия дней">▲&nbsp;<b id="s-streak">0</b></span>
+    <span class="stat hp"  title="Попытки">●&nbsp;<b id="s-hp">5</b></span>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══════════════ УЧИТЬ ══════════════ -->
+  <section class="tab" id="t-learn">
+
+    <div id="learn-home">
+      <div class="pad">
+        <div class="seg" id="seg-learn">
+          <button data-std="escd" class="on">ЕСКД 2.7xx<small>схемы</small></button>
+          <button data-std="plan">ГОСТ 21.210<small>планы</small></button>
+        </div>
+
+        <div class="goalcard">
+          <div class="ring">
+            <svg width="54" height="54" viewBox="0 0 54 54">
+              <circle cx="27" cy="27" r="22" fill="none" stroke="#282e38" stroke-width="6"/>
+              <circle id="goalarc" cx="27" cy="27" r="22" fill="none" stroke="#6f9e7a" stroke-width="6"
+                      stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                      style="transition:stroke-dashoffset .5s cubic-bezier(.2,.7,.3,1)"/>
+            </svg>
+            <b id="goaltxt">0/20</b>
+          </div>
+          <div class="txt">
+            <h3 id="goaltitle">Дневная цель</h3>
+            <p id="goalsub">Пройди урок, чтобы не потерять серию.</p>
+          </div>
+        </div>
+
+        <div id="weakbox"></div>
+        <div class="sec-title">Разделы</div>
+        <div id="units"></div>
+
+        <div class="sec-title">Общее</div>
+        <button class="weak" id="btn-mixed">
+          <span style="font-size:19px">◈</span>
+          <span style="flex:1 1 auto;min-width:0">
+            <b>Смешанный урок</b><br>
+            <span>10 символов из всех разделов, по порядку повторения</span>
+          </span>
+        </button>
+        <button class="weak" id="btn-reset" style="justify-content:center;color:var(--text-mute)">
+          <span style="font-size:13px">Сбросить весь прогресс</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="learn-run" hidden>
+      <div class="runbar">
+        <button class="x" id="btn-quit" aria-label="Выйти">✕</button>
+        <div class="bar"><i id="barfill"></i></div>
+        <span class="qnum" id="qnum">1/10</span>
+      </div>
+      <div id="qwrap"></div>
+      <div id="fb" hidden></div>
+    </div>
+
+    <div id="learn-done" hidden></div>
+  </section>
+
+  <!-- ══════════════ СОБИРАТЬ ══════════════ -->
+  <section class="tab" id="t-build" hidden>
+
+    <div class="ws" id="ws">
+      <svg id="sheet" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="softglow" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="4.5"/>
+          </filter>
+        </defs>
+        <g id="viewport">
+          <g id="layer-wire"></g>
+          <g id="layer-glow"></g>
+          <g id="layer-part"></g>
+          <g id="layer-pin"></g>
+        </g>
+      </svg>
+
+      <div class="wshint" id="wshint">
+        <div>
+          <b>Пустое поле</b>
+          Возьми деталь из палитры внизу.<br>
+          Нажми на вывод, затем на другой — появится провод.
+        </div>
+      </div>
+
+      <div class="hud">
+        <button id="z-in"  aria-label="Приблизить">＋</button>
+        <button id="z-out" aria-label="Отдалить">－</button>
+        <button id="z-fit" aria-label="Показать всё" style="font-size:13px">⤢</button>
+      </div>
+
+      <div class="props" id="props" hidden></div>
+    </div>
+
+    <div class="diag" id="diag"></div>
+
+    <div class="palette">
+      <div class="row" id="pal-row"></div>
+      <div class="tools">
+        <button id="t-check" class="primary">Проверить</button>
+        <button id="t-clear">Очистить</button>
+        <button id="t-demo">Примеры</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ СПРАВОЧНИК ══════════════ -->
+  <section class="tab" id="t-ref" hidden>
+    <div class="search">
+      <input id="q" type="search" placeholder="Поиск: резистор, VD, розетка…" autocomplete="off">
+    </div>
+    <div class="pad" style="padding-top:8px">
+      <div class="seg" id="seg-ref">
+        <button data-std="escd" class="on">ЕСКД 2.7xx<small>схемы</small></button>
+        <button data-std="plan">ГОСТ 21.210<small>планы</small></button>
+      </div>
+      <div id="reflist"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ ОРИГИНАЛ ГОСТ ══════════════ -->
+  <section class="tab" id="t-orig" hidden>
+    <div class="pvbar">
+      <button id="pv-prev" aria-label="Назад">‹</button>
+      <span id="pv-num">1 / 18</span>
+      <button id="pv-next" aria-label="Вперёд">›</button>
+    </div>
+    <div class="pv" id="pv"></div>
+    <div class="pvfoot">
+      ГОСТ 21.210—2014 · Страницы оригинала стандарта.<br>
+      Символы в разделе «Планы» вырезаны из этих страниц — сверяйся здесь.
+    </div>
+  </section>
+
+</main>
+
+<nav id="tabbar">
+  <button data-tab="learn" class="on">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13.5"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M9 8h6"/>
+    </svg>
+    Учить
+  </button>
+  <button data-tab="build">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="6" r="2.4"/>
+      <path d="M8.4 18h3.2a3 3 0 0 0 3-3V6"/><path d="M4 18H2.6"/>
+    </svg>
+    Собирать
+  </button>
+  <button data-tab="ref">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v14a1.5 1.5 0 0 0-1.5-1.5H4z"/>
+      <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v14a1.5 1.5 0 0 1 1.5-1.5H20z"/>
+    </svg>
+    Справочник
+  </button>
+  <button data-tab="orig">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+      <path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/>
+    </svg>
+    ГОСТ
+  </button>
+</nav>
+
+<div id="toast" hidden></div>
+<div id="sheet-host"></div>
+
+<script src="symbols.js"></script>
+<script src="plan-symbols.js"></script>
+<script src="circuit.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

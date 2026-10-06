@@ -1,0 +1,18 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" fill="#14171c"/>
+  <!-- едва заметная сетка рабочего поля -->
+  <g stroke="#22262e" stroke-width="4">
+    <line x1="0" y1="128" x2="512" y2="128"/>
+    <line x1="0" y1="256" x2="512" y2="256"/>
+    <line x1="0" y1="384" x2="512" y2="384"/>
+    <line x1="128" y1="0" x2="128" y2="512"/>
+    <line x1="256" y1="0" x2="256" y2="512"/>
+    <line x1="384" y1="0" x2="384" y2="512"/>
+  </g>
+  <!-- резистор: линия выводов + прямоугольник тела по ГОСТ -->
+  <line x1="52" y1="256" x2="460" y2="256" stroke="#6f93b0" stroke-width="30" stroke-linecap="round"/>
+  <rect x="156" y="208" width="200" height="96" rx="8" fill="#14171c" stroke="#6f93b0" stroke-width="30"/>
+  <!-- контактные площадки на концах выводов -->
+  <circle cx="52" cy="256" r="17" fill="#6f93b0"/>
+  <circle cx="460" cy="256" r="17" fill="#6f93b0"/>
+</svg>
